@@ -1,4 +1,5 @@
 grid = $(foreach x,$(1),$(foreach y,$(2),$(x)/$(y)))
+HPC = srun --ntasks=1 --cpus-per-task=1 --time=100:00:00 --partition=regular --mem=30G
 
 PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
@@ -19,7 +20,7 @@ $(foreach _, $(DTYPES), $(eval $(call _tgt,$_)))
 define _pproc
 $(PFILES:%=$(2)/%): $(2)/%.RData: $(2).r $(1)/%.RData
 	@mkdir -p $$(dir $$@)
-	Rscript $$^ $$@
+	$(HPC) Rscript $$^ $$@
 endef
 $(foreach _, rna_seq_log2cpm rna_seq_vst, $(eval $(call _pproc,rna_seq_raw,$_)))
 
