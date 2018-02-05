@@ -4,9 +4,17 @@ PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
 DTYPES = rna_seq_raw cnv_segments mirna_seq clinical
 DFILES = $(call grid,$(DTYPES),$(PFILES))
+ALL = $(DFILES) $(PFILES:%=rna_seq_log2cpm/%) $(PFILES:%=rna_seq_vst/%)
 
 .PHONY: all
-all: $(DFILES) $(PFILES:%=rna_seq_log2cpm/%) $(PFILES:%=rna_seq_vst/%)
+all: $(ALL)
+
+define _tgt
+.PHONY: $(1)
+$(1): $(shell echo "$(ALL)" | tr ' ' '\n' | grep $(1))
+endef
+$(foreach _, $(PROJECTS), $(eval $(call _tgt,$_)))
+$(foreach _, $(DTYPES), $(eval $(call _tgt,$_)))
 
 define _pproc
 $(PFILES:%=$(2)/%): $(2)/%.RData: $(2).r $(1)/%.RData
