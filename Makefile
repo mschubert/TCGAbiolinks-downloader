@@ -2,7 +2,7 @@ grid = $(foreach x,$(1),$(foreach y,$(2),$(x)/$(y)))
 
 PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
-DTYPES = rna_seq_raw
+DTYPES = rna_seq_raw cnv_segments mirna_seq
 DFILES = $(call grid,$(DTYPES),$(PFILES))
 
 all: $(DFILES)

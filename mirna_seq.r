@@ -12,4 +12,4 @@ query = GDCquery(project = PROJECT,
                  data.type = "miRNA Expression Quantification")
 
 GDCdownload(query)
-GDCprepare(query, save=TRUE, save.filename=OUTFILE)
+GDCprepare(query, save=TRUE, save.filename=OUTFILE, remove.files.prepared=TRUE)

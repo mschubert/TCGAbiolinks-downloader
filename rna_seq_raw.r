@@ -13,4 +13,4 @@ query = GDCquery(project = PROJECT,
                  workflow.type = "HTSeq - Counts")
 
 GDCdownload(query)
-GDCprepare(query, save=TRUE, save.filename=OUTFILE)
+GDCprepare(query, save=TRUE, save.filename=OUTFILE, remove.files.prepared=TRUE)
