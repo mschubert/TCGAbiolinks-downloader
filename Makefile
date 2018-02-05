@@ -2,14 +2,11 @@ grid = $(foreach x,$(1),$(foreach y,$(2),$(x)/$(y)))
 
 PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
-DTYPES = rna_seq_raw cnv_segments mirna_seq
+DTYPES = rna_seq_raw cnv_segments mirna_seq clinical
 DFILES = $(call grid,$(DTYPES),$(PFILES))
 
-RNA_CPM = $(PFILES:%=rna_seq_log2cpm/%)
-RNA_VST = $(PFILES:%=rna_seq_vst/%)
-
 .PHONY: all
-all: $(DFILES) $(RNA_CPM) $(RNA_VST)
+all: $(DFILES) $(PFILES:%=rna_seq_log2cpm/%) $(PFILES:%=rna_seq_vst/%)
 
 define _pproc
 $(PFILES:%=$(2)/%): $(2)/%.RData: $(2).r $(1)/%.RData

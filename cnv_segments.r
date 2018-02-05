@@ -1,5 +1,4 @@
 library(TCGAbiolinks)
-library(dplyr)
 
 PROJECT = commandArgs(TRUE)[1]
 OUTFILE = commandArgs(TRUE)[2]
