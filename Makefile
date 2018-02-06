@@ -1,5 +1,5 @@
 grid = $(foreach x,$(1),$(foreach y,$(2),$(x)/$(y)))
-HPC = srun --ntasks=1 --cpus-per-task=1 --time=100:00:00 --partition=regular --mem=30G
+HPC = srun --ntasks=1 --cpus-per-task=1 --time=50:00:00 --partition=regular --mem=30G
 
 PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
