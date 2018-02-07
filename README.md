@@ -40,6 +40,10 @@ make <cohort> # eg. 'TCGA-LUAD' for lung adenocarcinoma
 make <data type> # eg. 'clinical' for downloading clinical data
 ```
 
+Data will be stored as `RData` files (containing a `data.frame` or
+`SummarizedExperiment` object) for each cohort in the respective data type
+directories.
+
 
 Additional documentation
 ------------------------
