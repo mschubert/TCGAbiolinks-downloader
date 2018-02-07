@@ -1,11 +1,12 @@
 library(SummarizedExperiment)
-io = import('ebits/io')
-rnaseq = import('ebits/process/rna-seq')
+library(DESeq2)
 
 INFILE = commandArgs(TRUE)[1]
 OUTFILE = commandArgs(TRUE)[2]
 
-data = io$load(INFILE)
-assay(data) = rnaseq$vst(assay(data))
+load(INFILE)
+mat = assay(data)
+dset = DESeqDataSetFromMatrix(mat, colData=data.frame(id=colnames(mat)), design=~1)
+assay(data) = vst(dset)
 
 save(data, file=OUTFILE)
