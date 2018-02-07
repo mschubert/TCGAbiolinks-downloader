@@ -29,7 +29,7 @@ The are three options to download and save TCGA data:
 
 ```r
 # Download everything
-make
+make # add the -j<n> flag to run n data sets in parallel
 
 # Selection by cohort
 # - see projects.txt for valid cohorts
