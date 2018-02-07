@@ -1,9 +1,10 @@
 grid = $(foreach x,$(1),$(foreach y,$(2),$(x)/$(y)))
 HPC = srun --ntasks=1 --cpus-per-task=1 --time=50:00:00 --partition=regular --mem=30G
 
+#TODO: subtypes, methylation
 PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
-DTYPES = rna_seq_raw cnv_segments mirna_seq clinical
+DTYPES = snv_mutect2 rna_seq_raw cnv_segments mirna_seq clinical
 DFILES = $(call grid,$(DTYPES),$(PFILES))
 ALL = $(DFILES) $(PFILES:%=rna_seq_log2cpm/%) $(PFILES:%=rna_seq_vst/%)
 
