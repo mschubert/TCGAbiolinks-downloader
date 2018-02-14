@@ -43,4 +43,4 @@ redactions_2016_07_15__00_00_14.tsv:
 	wget -N http://gdac.broadinstitute.org/runs/sampleReports/latest/redactions_2016_07_15__00_00_14.tsv
 
 tcga.tar: $(ALL)
-	tar -cf $@ $(DTYPES)
+	tar -cf $@ $(ALL)
