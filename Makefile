@@ -6,7 +6,7 @@ PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
 DTYPES = snv_mutect2 rna_seq_raw cnv_segments mirna_seq clinical rppa
 EXCLUDE = rppa/TCGA-LAML.RData
-DFILES = $(filter-out $(call grid,$(DTYPES),$(PFILES)), $(EXCLUDE))
+DFILES = $(filter-out $(EXCLUDE), $(call grid,$(DTYPES),$(PFILES)))
 ALL = $(DFILES) $(PFILES:%=rna_seq_log2cpm/%) $(PFILES:%=rna_seq_vst/%)
 
 .PHONY: all
