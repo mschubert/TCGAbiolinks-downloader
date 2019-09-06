@@ -1,10 +1,10 @@
 grid = $(foreach x,$(1),$(foreach y,$(2),$(x)/$(y)))
-HPC = #srun --ntasks=1 --cpus-per-task=1 --time=50:00:00 --partition=regular --mem=30G
+HPC = srun --ntasks=1 --cpus-per-task=1 --time=50:00:00 --partition=regular --mem=30G
 
-#TODO: subtypes, methylation
+#TODO: subtypes
 PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
-DTYPES = snv_mutect2 rna_seq_raw cnv_segments mirna_seq clinical clinicalsample rppa rna_isoform_raw
+DTYPES = snv_mutect2 rna_seq_raw cnv_segments mirna_seq clinical clinicalsample rppa rna_isoform_raw meth_beta
 EXCLUDE = rppa/TCGA-LAML.RData
 DFILES = $(filter-out $(EXCLUDE), $(call grid,$(DTYPES),$(PFILES)))
 ALL = $(DFILES) \
