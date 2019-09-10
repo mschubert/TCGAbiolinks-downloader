@@ -1,4 +1,5 @@
 library(TCGAbiolinks)
+library(dplyr)
 
 PROJECT = commandArgs(TRUE)[1]
 OUTFILE = commandArgs(TRUE)[2]
@@ -9,7 +10,8 @@ query = GDCquery(project = PROJECT,
 #                 experimental.strategy = "RNA-Seq",
                  legacy = TRUE)
 
-#TODO: map hg19 to GRCh38
+# prevent duplicates
+query$results[[1]] = query$results[[1]] %>% filter(sapply(tags, function(x) x[1]) == "unnormalized")
 
 GDCdownload(query)
 GDCprepare(query, save=TRUE, save.filename=OUTFILE, remove.files.prepared=TRUE)
