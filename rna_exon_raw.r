@@ -13,8 +13,9 @@ query = GDCquery(project = PROJECT,
 # only use RNAseq v2, otherwise error with duplicated samples
 query$results[[1]] = query$results[[1]] %>% filter(sapply(tags, function(x) x[2]) == "v2")
 
-## also discard the ones where there are still duplicates left
-#query$results[[1]] = query$results[[1]][!duplicated(query$results[[1]]),]
+# also discard the ones where there are still duplicates left
+# req for LAML, UCEC, COAD
+query$results[[1]] = query$results[[1]][!duplicated(query$results[[1]]$cases),]
 
 GDCdownload(query)
 GDCprepare(query, save=TRUE, save.filename=OUTFILE, remove.files.prepared=TRUE)
