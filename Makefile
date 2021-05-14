@@ -1,11 +1,11 @@
 grid = $(foreach x,$(1),$(foreach y,$(2),$(x)/$(y)))
-HPC = srun --ntasks=1 --cpus-per-task=1 --time=50:00:00 --partition=regular --mem=30G
+HPC = #srun --ntasks=1 --cpus-per-task=1 --time=50:00:00 --partition=regular --mem=30G
 
 #TODO: subtypes
 PROJECTS = $(shell cat projects.txt)
 PFILES = $(PROJECTS:%=%.RData)
 DTYPES = snv_mutect2 rna_seq_raw cnv_segments mirna_seq clinical clinicalsample \
-		 rppa rna_isoform_raw meth_beta rna_exon_raw wgs_segments
+		 rppa rna_isoform_raw meth_beta rna_exon_raw wgs_segments rna_seq_tmm
 EXCLUDE = rppa/TCGA-LAML.RData
 DFILES = $(filter-out $(EXCLUDE), $(call grid,$(DTYPES),$(PFILES)))
 ALL = $(DFILES) \
@@ -29,6 +29,7 @@ $(PFILES:%=$(2)/%): $(2)/%.RData: pproc_$(3).r $(1)/%.RData
 endef
 $(eval $(call _pproc,rna_seq_raw,rna_seq_log2cpm,log2cpm))
 $(eval $(call _pproc,rna_seq_raw,rna_seq_vst,vst))
+$(eval $(call _pproc,rna_seq_raw,rna_seq_tmm,tmm))
 $(eval $(call _pproc,rna_isoform_raw,rna_isoform_log2cpm,log2cpm))
 $(eval $(call _pproc,rna_isoform_raw,rna_isoform_vst,vst))
 
