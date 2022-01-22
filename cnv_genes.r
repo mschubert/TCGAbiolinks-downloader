@@ -1,9 +1,9 @@
 library(SummarizedExperiment)
+library(biomaRt)
 
 INFILE = commandArgs(TRUE)[1]
 OUTFILE = commandArgs(TRUE)[2]
 
-load(INFILE)
-assay(data) = edgeR::cpm(assay(data), log=TRUE)
+data = readRDS(INFILE)
 
-save(data, file=OUTFILE)
+saveRDS(data, file=OUTFILE)
